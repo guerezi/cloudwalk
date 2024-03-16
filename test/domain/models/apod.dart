@@ -1,3 +1,4 @@
+import 'package:cloudwalk/src/domain/enums/media_type.dart';
 import 'package:cloudwalk/src/domain/models/apod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -5,7 +6,7 @@ void main() {
   group('NasaApod', () {
     final testJson = {
       "date": "2024-03-16",
-      "explanation": "Explanation text...",
+      "explanation": "Explanation text",
       "hdurl": "https://apod.nasa.gov/apod/image/2403/ELT_2024-03-13_2048.jpg",
       "media_type": "image",
       "service_version": "v1",
@@ -17,9 +18,9 @@ void main() {
       final apod = NasaApod.fromJson(testJson);
 
       expect(apod.date, const TypeMatcher<String>());
-      expect(apod.date, testJson["date"]);
+      expect(apod.date, DateTime.parse(testJson["date"] as String));
       expect(apod.explanation, testJson["explanation"]);
-      expect(apod.mediaType, testJson["media_type"]);
+      expect(apod.mediaType, MediaType.image);
       expect(apod.serviceVersion, testJson["service_version"]);
       expect(apod.title, testJson["title"]);
       expect(apod.hdurl, const TypeMatcher<Uri>());
