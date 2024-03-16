@@ -1,4 +1,5 @@
 import 'package:cloudwalk/src/pages/home/home_apod_view.dart';
+import 'package:cloudwalk/src/router/router.dart';
 import 'package:flutter/material.dart';
 
 class NasaAPOD extends StatelessWidget {
@@ -7,11 +8,16 @@ class NasaAPOD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: "Nasa's APOD",
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF0032A0),
+          primary: const Color(0xFF0032A0),
+          secondary: const Color(0xFFE4002B),
+        ),
         useMaterial3: true,
       ),
+      routes: routes,
       home: const HomeAPOD(),
     );
   }
