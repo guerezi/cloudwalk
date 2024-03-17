@@ -2,8 +2,8 @@ import 'package:cloudwalk/src/pages/home/home_apod_view.dart';
 import 'package:cloudwalk/src/router/router.dart';
 import 'package:flutter/material.dart';
 
-class NasaAPOD extends StatelessWidget {
-  const NasaAPOD({super.key});
+class Nasa extends StatelessWidget {
+  const Nasa({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class NasaAPOD extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: routes,
-      home: const HomeAPOD(),
+      home: const HomeApod(),
     );
   }
 }

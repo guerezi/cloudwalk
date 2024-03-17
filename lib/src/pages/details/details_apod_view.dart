@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DetailsAPOD extends StatefulWidget {
-  const DetailsAPOD({super.key});
+class DetailsApod extends StatefulWidget {
+  const DetailsApod({super.key});
 
   @override
-  State<DetailsAPOD> createState() => _DetailsAPODState();
+  State<DetailsApod> createState() => _DetailsApodState();
 }
 
-class _DetailsAPODState extends State<DetailsAPOD> {
+class _DetailsApodState extends State<DetailsApod> {
   int _counter = 0;
 
   void _incrementCounter() {

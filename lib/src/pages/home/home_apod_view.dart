@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomeAPOD extends StatefulWidget {
-  const HomeAPOD({super.key});
+class HomeApod extends StatefulWidget {
+  const HomeApod({super.key});
 
   @override
-  State<HomeAPOD> createState() => _HomeAPODState();
+  State<HomeApod> createState() => _HomeApodState();
 }
 
-class _HomeAPODState extends State<HomeAPOD> {
+class _HomeApodState extends State<HomeApod> {
   int _counter = 0;
 
   @override
