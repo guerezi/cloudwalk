@@ -1,15 +1,12 @@
 // ignore_for_file: no_logic_in_create_state
 
-import 'package:cloudwalk/src/data/bloc/apod_state.dart';
 import 'package:cloudwalk/src/domain/bloc/apod_bloc.dart';
+import 'package:cloudwalk/src/domain/bloc/apod_event.dart';
 import 'package:cloudwalk/src/domain/bloc/apod_state.dart';
-import 'package:cloudwalk/src/domain/extensions/datetime_extension.dart';
-import 'package:cloudwalk/src/domain/models/apod.dart';
+import 'package:cloudwalk/src/domain/enums/apod_staus.dart';
 import 'package:cloudwalk/src/domain/repositories/nasa.dart';
 import 'package:cloudwalk/src/pages/home/home_apod_controller.dart';
-import 'package:cloudwalk/src/pages/utils.dart';
-import 'package:cloudwalk/src/pages/widgets/apod_card.dart';
-import 'package:cloudwalk/src/router/routes.dart';
+import 'package:cloudwalk/src/pages/widgets/apod_infinite_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,59 +47,72 @@ class _HomeApodState extends State<HomeApod> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Nasa's Apod"),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: BlocBuilder<ApodBloc, ApodState>(
-          bloc: controller.apodBloc,
-          builder: (context, bloc) {
-            if (bloc is ApodSuccessState) {
-              return successBody(bloc.images);
-            }
-
-            if (bloc is ApodErrorState) {
-              return errorBody(bloc.error);
-            }
-
-            // case ApodInitialState or ApodLoadingState, the app will show a loading
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          },
+        title: Text(
+          "Nasa's Apod",
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
         ),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+      ),
+      body: BlocProvider(
+        create: (_) => controller.apodBloc,
+        child: SafeArea(
+          child: BlocBuilder<ApodBloc, ApodState>(
+            bloc: controller.apodBloc,
+            builder: (context, bloc) {
+              print(bloc.status);
+
+              if (bloc.status == ApodStatus.success) {
+                return successBody(bloc);
+              }
+
+              if (bloc.status == ApodStatus.error) {
+                return errorBody(bloc.error);
+              }
+
+              // case ApodInitialState or ApodLoadingState, the app will show a loading
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            },
+          ),
+        ),
+      ),
+      floatingActionButton: IconButton.filled(
+        onPressed: () => controller.openSearch(context),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+            Theme.of(context).colorScheme.secondary,
+          ),
+        ),
+        icon: Icon(
+          Icons.search_rounded,
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
   }
 
-  Widget successBody(List<NasaApod> data) {
-    return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, i) {
-        final apod = data[i];
+  Widget successBody(ApodState data) {
+    if (data.images.isEmpty) {
+      return const Center(
+        child: Text('No Posts'),
+      );
+    }
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: defaultPagePadding),
-              child: Text(
-                "${data[i].date.toDisplay}:",
-                style: Theme.of(context).textTheme.bodyMedium,
+    return ApodInfiniteList(
+      listController: controller.listController,
+      data: data,
+      onReachBottomCallback: (listContext) {
+        listContext.read<ApodBloc>().add(
+              GetApod(
+                params: controller.nextPage,
               ),
-            ),
-            ApodCard(
-              date: apod.date,
-              title: apod.title,
-              mediaType: apod.mediaType,
-              media: apod.url,
-              onClickCallback: () {
-                Navigator.of(context)
-                    .pushNamed(Routes.details, arguments: apod);
-              },
-            ),
-          ],
-        );
+            );
       },
     );
   }

@@ -1,5 +1,5 @@
 class Constants {
-  static const pageSize = 7;
+  static const pageSize = 6;
 
   static const key = 'Key';
 

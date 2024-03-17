@@ -2,23 +2,25 @@ import 'package:cloudwalk/src/pages/home/home_apod_view.dart';
 import 'package:cloudwalk/src/router/router.dart';
 import 'package:flutter/material.dart';
 
-class Nasa extends StatelessWidget {
+class Nasa extends MaterialApp {
   const Nasa({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Nasa's APOD",
-      theme: ThemeData(
+  ThemeData? get theme => ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF0032A0),
           primary: const Color(0xFF0032A0),
           secondary: const Color(0xFFE4002B),
         ),
         useMaterial3: true,
-      ),
-      routes: routes,
-      home: const HomeApod(),
-    );
-  }
+      );
+
+  @override
+  String get title => "Nasa's APOD";
+
+  @override
+  Map<String, WidgetBuilder>? get routes => appRoutes;
+
+  @override
+  Widget? get home => const HomeApod();
 }

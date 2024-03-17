@@ -12,7 +12,18 @@ class DetailsApod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          apod.title,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(defaultPagePadding),
@@ -20,7 +31,7 @@ class DetailsApod extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ApodMedia(
-                media: apod.hdurl,
+                media: apod.hdurl ?? apod.url,
                 type: apod.mediaType,
               ),
               const SizedBox(height: 16.0),

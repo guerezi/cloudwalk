@@ -20,4 +20,17 @@ class NasaApodQueryParams {
         'end_date': endDate.toSimple,
         'api_key': apiKey,
       };
+
+  NasaApodQueryParams copyWith({
+    DateTime? date,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? apiKey,
+  }) =>
+      NasaApodQueryParams(
+        date: date ?? this.date,
+        startDate: startDate ?? this.startDate,
+        endDate: endDate ?? this.endDate,
+        apiKey: apiKey ?? this.apiKey,
+      );
 }

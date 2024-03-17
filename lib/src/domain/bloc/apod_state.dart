@@ -1,20 +1,28 @@
 import 'package:cloudwalk/src/data/bloc/apod_state.dart';
+import 'package:cloudwalk/src/domain/enums/apod_staus.dart';
+import 'package:cloudwalk/src/domain/models/apod.dart';
 
-class ApodInitialState extends ApodState {
-  ApodInitialState() : super(images: []);
-}
+final class ApodState extends IApodState {
+  const ApodState({
+    super.status,
+    super.images,
+    super.hasReachedMax,
+    super.error,
+  });
 
-class ApodLoadingState extends ApodState {
-  ApodLoadingState() : super(images: []);
-}
+  ApodState copyWith({
+    ApodStatus? status,
+    List<NasaApod>? images,
+    bool? hasReachedMax,
+    Object? error,
+  }) =>
+      ApodState(
+        status: status ?? this.status,
+        images: images ?? this.images,
+        hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+        error: error ?? this.error,
+      );
 
-class ApodSuccessState extends ApodState {
-  ApodSuccessState({required super.images});
-}
-
-//TODO: docs
-class ApodErrorState extends ApodState {
-  final Object error;
-
-  ApodErrorState({required this.error}) : super(images: []);
+  @override
+  List<Object?> get props => [status, images, hasReachedMax];
 }

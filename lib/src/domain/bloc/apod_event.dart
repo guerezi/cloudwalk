@@ -6,3 +6,9 @@ class GetApod extends ApodEvents {
 
   final NasaApodQueryParams params;
 }
+
+class GetRangeApod extends ApodEvents {
+  GetRangeApod({required this.params});
+
+  final NasaApodQueryParams params;
+}

@@ -24,45 +24,33 @@ class ApodCard extends StatelessWidget {
     return InkWell(
       onTap: onClickCallback,
       child: Ink(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor.withOpacity(0.6),
-              Theme.of(context).colorScheme.secondary.withOpacity(0.6),
-            ],
-          ),
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: defaultPagePadding,
+          vertical: defaultPageSpacing,
         ),
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: defaultPagePadding, vertical: defaultPageSpacing),
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Theme.of(context).scaffoldBackgroundColor,
-                Colors.transparent,
-              ],
-              stops: const [0.7, 1.0],
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
                 title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: defaultPageSpacing),
-              ApodMedia(
+            ),
+            SizedBox.square(dimension: defaultPageSpacing),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: ApodMedia(
                 media: media,
                 type: mediaType,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
