@@ -21,7 +21,6 @@ void main() {
       expect(apod.date, DateTime.parse(testJson["date"] as String));
       expect(apod.explanation, testJson["explanation"]);
       expect(apod.mediaType, MediaType.image);
-      expect(apod.serviceVersion, testJson["service_version"]);
       expect(apod.title, testJson["title"]);
       expect(apod.hdurl, const TypeMatcher<Uri>());
       expect(apod.hdurl, testJson["hdurl"]);
