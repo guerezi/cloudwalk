@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 class NasaRepository extends INasaRepository {
   @override
   Future<Response> getApod(NasaApodQueryParams params) {
-    // TODO: rever
     return Dio().get(
       'https://api.nasa.gov/planetary/apod',
       queryParameters: params.toMap,
