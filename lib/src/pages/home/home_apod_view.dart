@@ -49,6 +49,10 @@ class _HomeApodState extends State<HomeApod> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Nasa's Apod"),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: BlocBuilder<ApodBloc, ApodState>(
           bloc: controller.apodBloc,
@@ -72,34 +76,32 @@ class _HomeApodState extends State<HomeApod> {
   }
 
   Widget successBody(List<NasaApod> data) {
-    return ListView.separated(
+    return ListView.builder(
       itemCount: data.length,
-      separatorBuilder: (context, i) => Container(
-        padding: EdgeInsets.symmetric(horizontal: defaultPagePadding),
-        decoration: const BoxDecoration(
-          border: Border(
-            top: BorderSide(),
-          ),
-        ),
-        child: Text(
-          "${data[i].date.toDisplay}:",
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .copyWith(fontWeight: FontWeight.bold),
-        ),
-      ),
       itemBuilder: (context, i) {
         final apod = data[i];
 
-        return ApodCard(
-          date: apod.date,
-          title: apod.title,
-          mediaType: apod.mediaType,
-          media: apod.url,
-          clickCallback: () {
-            Navigator.of(context).pushNamed(Routes.details);
-          },
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: defaultPagePadding),
+              child: Text(
+                "${data[i].date.toDisplay}:",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+            ApodCard(
+              date: apod.date,
+              title: apod.title,
+              mediaType: apod.mediaType,
+              media: apod.url,
+              onClickCallback: () {
+                Navigator.of(context)
+                    .pushNamed(Routes.details, arguments: apod);
+              },
+            ),
+          ],
         );
       },
     );

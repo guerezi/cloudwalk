@@ -1,47 +1,43 @@
+import 'package:cloudwalk/src/domain/extensions/datetime_extension.dart';
+import 'package:cloudwalk/src/domain/models/apod.dart';
+import 'package:cloudwalk/src/pages/utils.dart';
+import 'package:cloudwalk/src/pages/widgets/apod_media.dart';
 import 'package:flutter/material.dart';
 
-class DetailsApod extends StatefulWidget {
-  const DetailsApod({super.key});
+class DetailsApod extends StatelessWidget {
+  const DetailsApod({super.key, required this.apod});
 
-  @override
-  State<DetailsApod> createState() => _DetailsApodState();
-}
-
-class _DetailsApodState extends State<DetailsApod> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final NasaApod apod;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('widget.title'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(defaultPagePadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ApodMedia(
+                media: apod.hdurl,
+                type: apod.mediaType,
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                apod.explanation,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                "Date: ${apod.date.toDisplay}\n"
+                "Media Type: ${apod.mediaType.toString().split('.').last}\n",
+                style: const TextStyle(fontSize: 14.0, color: Colors.grey),
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
