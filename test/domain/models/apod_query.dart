@@ -1,37 +1,73 @@
+import 'package:cloudwalk/src/domain/extensions/datetime_extension.dart';
 import 'package:cloudwalk/src/domain/models/apod_query.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('NasaApodQueryParams', () {
-    const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+  group('NasaApodQueryParams tests', () {
+    const apiKey = 'YOUR_API_KEY';
+    final today = DateTime.now();
+    final yesterday = today.subtract(const Duration(days: 1));
+    final tomorrow = today.add(const Duration(days: 1));
 
-    test('toMap creates a map with non-null properties', () {
+    test('creates params with today as date', () {
       final params = NasaApodQueryParams(
-        date: DateTime.parse('2024-03-17'),
-        thumbs: true,
+        date: today,
+        startDate: yesterday,
+        endDate: tomorrow,
         apiKey: apiKey,
       );
 
-      final expectedMap = {
-        'date': '2024-03-17',
-        'thumbs': true,
-        'api_key': apiKey,
-      };
+      final map = params.toMap;
 
-      expect(params.toMap, expectedMap);
+      expect(map['date'], today.toSimple);
+      expect(map['thumbs'], true);
+      expect(map['start_date'], yesterday.toSimple);
+      expect(map['end_date'], tomorrow.toSimple);
+      expect(map['api_key'], apiKey);
     });
 
-    test('toMap excludes null properties', () {
+    test('creates params without date', () {
       final params = NasaApodQueryParams(
+        startDate: yesterday,
+        endDate: tomorrow,
         apiKey: apiKey,
       );
 
-      final expectedMap = {
-        'thumbs': false,
-        'api_key': apiKey,
-      };
+      final map = params.toMap;
 
-      expect(params.toMap, expectedMap);
+      expect(map.containsKey('date'), false);
+      expect(map['thumbs'], true);
+      expect(map['start_date'], yesterday.toSimple);
+      expect(map['end_date'], tomorrow.toSimple);
+      expect(map['api_key'], apiKey);
+    });
+
+    test('throws error for invalid startDate', () {
+      final tomorrow = today.add(const Duration(days: 1));
+
+      expect(
+        () => NasaApodQueryParams(
+          date: today,
+          startDate: tomorrow,
+          endDate: yesterday,
+          apiKey: apiKey,
+        ),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('throws error for invalid endDate', () {
+      final yesterday = today.subtract(const Duration(days: 1));
+
+      expect(
+        () => NasaApodQueryParams(
+          date: today,
+          startDate: tomorrow,
+          endDate: yesterday,
+          apiKey: apiKey,
+        ),
+        throwsA(isA<ArgumentError>()),
+      );
     });
   });
 }

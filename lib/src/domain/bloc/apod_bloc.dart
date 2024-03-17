@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc/bloc.dart';
 import 'package:cloudwalk/src/data/bloc/apod_event.dart';
 import 'package:cloudwalk/src/data/bloc/apod_state.dart';
 import 'package:cloudwalk/src/data/repositories/nasa.dart';
@@ -8,28 +9,28 @@ import 'package:cloudwalk/src/domain/bloc/apod_state.dart';
 import 'package:cloudwalk/src/domain/models/apod.dart';
 import 'package:cloudwalk/src/domain/usecases/APOD_usecase.dart';
 
-class ApodBloc {
-  ApodBloc({required this.repository}) {
-    _inputStream.stream.listen(inputListener);
+class ApodBloc extends Bloc<ApodEvents, ApodState> {
+  ApodBloc({required this.repository}) : super(ApodInitialState()) {
+    on(listener);
   }
 
   final INasaRepository repository;
 
-  final _inputStream = StreamController<ApodEvents>();
-  final _outputStream = StreamController<ApodState>();
-
-  Sink<ApodEvents> get inputApod => _inputStream.sink;
-  Stream<ApodState> get outputApod => _outputStream.stream;
-
-  Future<void> inputListener(ApodEvents event) async {
+  Future<void> listener(ApodEvents event, Emitter<ApodState> emit) async {
     final apods = <NasaApod>[];
 
-    _outputStream.add(ApodLoadingState());
+    try {
+      emit(ApodLoadingState());
 
-    if (event is GetApod) {
-      apods.addAll(
-        await ApodUsecase(repository).execute(event.params),
-      );
+      if (event is GetApod) {
+        apods.addAll(
+          await ApodUsecase(repository).execute(event.params),
+        );
+      }
+
+      emit(ApodSuccessState(images: apods));
+    } catch (e) {
+      emit(ApodErrorState(error: e));
     }
   }
 }

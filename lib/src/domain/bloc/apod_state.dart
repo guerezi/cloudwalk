@@ -14,7 +14,7 @@ class ApodSuccessState extends ApodState {
 
 //TODO: docs
 class ApodErrorState extends ApodState {
-  final Exception error;
+  final Object error;
 
   ApodErrorState({required this.error}) : super(images: []);
 }

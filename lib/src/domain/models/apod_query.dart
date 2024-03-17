@@ -1,27 +1,23 @@
+import 'package:cloudwalk/src/domain/extensions/datetime_extension.dart';
+
 class NasaApodQueryParams {
   final DateTime? date;
-  final DateTime? startDate;
-  final DateTime? endDate;
-  final int? count;
-  final bool? thumbs;
+  final DateTime startDate;
+  final DateTime endDate;
   final String apiKey;
 
   NasaApodQueryParams({
     this.date,
-    this.startDate,
-    this.endDate,
-    this.count,
-    this.thumbs,
+    required this.startDate,
+    required this.endDate,
     required this.apiKey,
   });
 
-  //TODO: Remover a hora do toString();
   Map<String, dynamic> get toMap => {
-        if (date != null) 'date': date.toString(),
-        if (startDate != null) 'start_date': startDate.toString(),
-        if (endDate != null) 'end_date': endDate.toString(),
-        if (count != null) 'count': count,
-        if (thumbs != null) 'thumbs': thumbs,
+        if (date != null) 'date': date?.toSimple,
+        'thumbs': true,
+        'start_date': startDate.toSimple,
+        'end_date': endDate.toSimple,
         'api_key': apiKey,
       };
 }
