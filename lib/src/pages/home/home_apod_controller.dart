@@ -1,15 +1,17 @@
+import 'package:cloudwalk/src/data/repositories/nasa.dart';
 import 'package:cloudwalk/src/domain/bloc/apod_bloc.dart';
 import 'package:cloudwalk/src/domain/bloc/apod_event.dart';
 import 'package:cloudwalk/src/domain/constants.dart';
 import 'package:cloudwalk/src/domain/models/apod_query.dart';
-import 'package:cloudwalk/src/domain/repositories/nasa.dart';
 import 'package:flutter/material.dart';
 
+/// Class that separetes the logic from HomeView
+/// [nasa]
 class HomeApodController {
   HomeApodController({required this.nasaRepository});
 
   late final ApodBloc apodBloc;
-  final NasaRepository nasaRepository;
+  final INasaRepository nasaRepository;
   final listController = ScrollController();
 
   NasaApodQueryParams params = NasaApodQueryParams(

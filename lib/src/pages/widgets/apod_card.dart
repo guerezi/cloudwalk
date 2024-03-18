@@ -6,14 +6,12 @@ import 'package:flutter/material.dart';
 class ApodCard extends StatelessWidget {
   const ApodCard({
     super.key,
-    required this.date,
     required this.title,
     required this.mediaType,
     required this.media,
     required this.onClickCallback,
   });
 
-  final DateTime date;
   final String title;
   final MediaType mediaType;
   final Uri media;

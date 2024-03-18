@@ -53,6 +53,7 @@ class _ApodInfiniteListState extends State<ApodInfiniteList> {
           padding: EdgeInsets.symmetric(vertical: defaultPagePadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 padding: EdgeInsets.symmetric(horizontal: defaultPagePadding),
@@ -62,7 +63,6 @@ class _ApodInfiniteListState extends State<ApodInfiniteList> {
                 ),
               ),
               ApodCard(
-                date: apod.date,
                 title: apod.title,
                 mediaType: apod.mediaType,
                 media: apod.url,
