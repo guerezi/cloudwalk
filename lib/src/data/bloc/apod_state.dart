@@ -15,4 +15,7 @@ abstract class IApodState extends Equatable {
   final List<NasaApod> images;
   final bool hasReachedMax;
   final Object? error;
+
+  @override
+  List<Object?> get props => [status, images, hasReachedMax, error];
 }

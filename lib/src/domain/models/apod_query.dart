@@ -13,7 +13,11 @@ class NasaApodQueryParams {
     required this.startDate,
     required this.endDate,
     required this.apiKey,
-  });
+  }) {
+    if (startDate.isAfter(endDate) || endDate.isAfter(DateTime.now())) {
+      throw ArgumentError('Invalid date range');
+    }
+  }
 
   Map<String, dynamic> get toMap => {
         'thumbs': true,

@@ -8,7 +8,7 @@ import 'package:cloudwalk/src/domain/bloc/apod_event.dart';
 import 'package:cloudwalk/src/domain/bloc/apod_state.dart';
 import 'package:cloudwalk/src/domain/enums/apod_staus.dart';
 import 'package:cloudwalk/src/domain/models/apod.dart';
-import 'package:cloudwalk/src/domain/usecases/APOD_usecase.dart';
+import 'package:cloudwalk/src/domain/usecases/apod_usecase.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 /// ApodBloc responsible for handling Apod events and states

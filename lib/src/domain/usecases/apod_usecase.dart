@@ -12,10 +12,14 @@ class ApodUsecase {
   /// Calls repository [getApod] method and passes a [param] as query params
   Future<List<NasaApod>> execute(NasaApodQueryParams params) async {
     final result = await repository.getApod(params);
-    final data = result.data as List;
+    final data = result.data;
     final apods = <NasaApod>[];
 
-    for (var apod in data.reversed) {
+    if (data is Map) {
+      throw Exception(data['msg']);
+    }
+
+    for (var apod in (data as List).reversed) {
       apods.add(NasaApod.fromJson(apod as Map<String, dynamic>));
     }
 

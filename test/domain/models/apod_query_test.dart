@@ -11,45 +11,24 @@ void main() {
 
     test('creates params with today as date', () {
       final params = NasaApodQueryParams(
-        date: today,
-        startDate: yesterday,
-        endDate: tomorrow,
+        startDate: today,
+        endDate: today,
         apiKey: apiKey,
       );
 
       final map = params.toMap;
 
-      expect(map['date'], today.toSimple);
       expect(map['thumbs'], true);
-      expect(map['start_date'], yesterday.toSimple);
-      expect(map['end_date'], tomorrow.toSimple);
-      expect(map['api_key'], apiKey);
-    });
-
-    test('creates params without date', () {
-      final params = NasaApodQueryParams(
-        startDate: yesterday,
-        endDate: tomorrow,
-        apiKey: apiKey,
-      );
-
-      final map = params.toMap;
-
-      expect(map.containsKey('date'), false);
-      expect(map['thumbs'], true);
-      expect(map['start_date'], yesterday.toSimple);
-      expect(map['end_date'], tomorrow.toSimple);
+      expect(map['start_date'], today.toSimple);
+      expect(map['end_date'], today.toSimple);
       expect(map['api_key'], apiKey);
     });
 
     test('throws error for invalid startDate', () {
-      final tomorrow = today.add(const Duration(days: 1));
-
       expect(
         () => NasaApodQueryParams(
-          date: today,
           startDate: tomorrow,
-          endDate: yesterday,
+          endDate: tomorrow,
           apiKey: apiKey,
         ),
         throwsA(isA<ArgumentError>()),
@@ -57,11 +36,8 @@ void main() {
     });
 
     test('throws error for invalid endDate', () {
-      final yesterday = today.subtract(const Duration(days: 1));
-
       expect(
         () => NasaApodQueryParams(
-          date: today,
           startDate: tomorrow,
           endDate: yesterday,
           apiKey: apiKey,

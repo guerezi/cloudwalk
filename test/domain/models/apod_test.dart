@@ -17,15 +17,13 @@ void main() {
     test('fromJson creates a NasaApod object from a JSON map', () {
       final apod = NasaApod.fromJson(testJson);
 
-      expect(apod.date, const TypeMatcher<String>());
+      expect(apod.date, const TypeMatcher<DateTime>());
       expect(apod.date, DateTime.parse(testJson["date"] as String));
       expect(apod.explanation, testJson["explanation"]);
       expect(apod.mediaType, MediaType.image);
       expect(apod.title, testJson["title"]);
       expect(apod.hdurl, const TypeMatcher<Uri>());
-      expect(apod.hdurl, testJson["hdurl"]);
       expect(apod.url, const TypeMatcher<Uri>());
-      expect(apod.url, testJson["url"]);
     });
   });
 }

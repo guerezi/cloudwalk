@@ -27,7 +27,4 @@ class ApodState extends IApodState {
         hasReachedMax: hasReachedMax ?? this.hasReachedMax,
         error: error ?? this.error,
       );
-
-  @override
-  List<Object?> get props => [status, images, hasReachedMax];
 }

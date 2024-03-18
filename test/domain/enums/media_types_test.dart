@@ -6,7 +6,7 @@ void main() {
     test('contains all expected values', () {
       final expectedValues = ['video', 'image'];
 
-      final actualValues = MediaType.values.map((e) => e.toString()).toList();
+      final actualValues = MediaType.values.map((e) => e.name).toList();
       expect(actualValues, expectedValues);
     });
 
