@@ -1,16 +1,20 @@
 # cloudwalk
 
-A new Flutter project.
+## About
+
+This project involved connecting to the NASA API to retrieve information and images/videos. I took this opportunity to learn the commonly used (BLOC architecture)[https://pub.dev/packages/flutter_bloc] since is a well used package in the industry. This package differs from the one I usually work with (flutter_clean_architecture)[https://pub.dev/packages/flutter_clean_architecture], while my current work package serves as a data flow framework, it struggles with state management and required the use of provider/getIt or something like that. For an unrelated example demonstrating this architecture (without documentation, tests or even being good), please see this (link)[https://github.com/guerezi/skywatch]
+
+Despite the challenges faced during development due to learning BLOC on the go, the experience was valuable in enhancing my knowledge and introducing me to a new architecture
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project does not required a extensive warm up:
 
-A few resources to get you started if this is your first Flutter project:
+1 - run a `flutter pub get`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2 - replace 'Key' on the constants file with your key
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3 - done
+
+
