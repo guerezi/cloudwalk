@@ -3,6 +3,14 @@
 import 'package:cloudwalk/src/domain/enums/media_type.dart';
 import 'package:equatable/equatable.dart';
 
+/// Model class for Nasa Apod
+/// Holds the data for the Nasa Apod
+/// [date] - The date of the Apod
+/// [mediaType] - The media type of the Apod
+/// [explanation] - The explanation of the Apod
+/// [title] - The title of the Apod
+/// [hdurl] - The high definition url of the Apod
+/// [url] - The url of the Apod
 class NasaApod extends Equatable {
   late DateTime date;
   late MediaType mediaType;
@@ -11,6 +19,7 @@ class NasaApod extends Equatable {
   late Uri? hdurl;
   late Uri url;
 
+  /// Private constructor, to avoid creating a NasaApod without a factory method
   NasaApod._();
 
   factory NasaApod.fromJson(Map<String, dynamic> json) => NasaApod._()

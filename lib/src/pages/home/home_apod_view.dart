@@ -63,8 +63,6 @@ class _HomeApodState extends State<HomeApod> {
           child: BlocBuilder<ApodBloc, ApodState>(
             bloc: controller.apodBloc,
             builder: (context, bloc) {
-              print(bloc.status);
-
               if (bloc.status == ApodStatus.success) {
                 return successBody(bloc);
               }

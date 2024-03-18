@@ -11,7 +11,8 @@ import 'package:cloudwalk/src/domain/models/apod.dart';
 import 'package:cloudwalk/src/domain/usecases/APOD_usecase.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-class ApodBloc extends Bloc<ApodEvents, ApodState> {
+/// ApodBloc responsible for handling Apod events and states
+class ApodBloc extends Bloc<IApodEvents, ApodState> {
   ApodBloc({required this.repository}) : super(const ApodState()) {
     on<GetApod>(
       listener,
@@ -24,9 +25,12 @@ class ApodBloc extends Bloc<ApodEvents, ApodState> {
   }
 
   final INasaRepository repository;
+
+  /// Duration for throttling events
   final throttleDuration = const Duration(milliseconds: 200);
 
-  Future<void> listener(ApodEvents event, Emitter<ApodState> emit) async {
+  /// Listener responsible for Apod events and states
+  Future<void> listener(IApodEvents event, Emitter<ApodState> emit) async {
     if (state.hasReachedMax) return;
 
     final apods = <NasaApod>[];
@@ -55,6 +59,7 @@ class ApodBloc extends Bloc<ApodEvents, ApodState> {
     }
   }
 
+  /// Throttle events, used to avoid multiple requests (debouncer)
   EventTransformer<E> throttleDroppable<E>(Duration duration) {
     return (events, mapper) {
       return droppable<E>().call(events.throttle(duration), mapper);

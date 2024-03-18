@@ -1,20 +1,21 @@
 import 'package:cloudwalk/src/domain/extensions/datetime_extension.dart';
 
+/// Class that holds query params, such as
+/// [startDate] the start date of the query
+/// [endDate] the end date of the query
+/// [apiKey] the api key for the request
 class NasaApodQueryParams {
-  final DateTime? date;
   final DateTime startDate;
   final DateTime endDate;
   final String apiKey;
 
   NasaApodQueryParams({
-    this.date,
     required this.startDate,
     required this.endDate,
     required this.apiKey,
   });
 
   Map<String, dynamic> get toMap => {
-        if (date != null) 'date': date?.toSimple,
         'thumbs': true,
         'start_date': startDate.toSimple,
         'end_date': endDate.toSimple,
@@ -28,7 +29,6 @@ class NasaApodQueryParams {
     String? apiKey,
   }) =>
       NasaApodQueryParams(
-        date: date ?? this.date,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
         apiKey: apiKey ?? this.apiKey,

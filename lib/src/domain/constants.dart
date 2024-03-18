@@ -3,6 +3,7 @@ class Constants {
 
   static const key = 'Key';
 
+  static const nasasApiUrl = 'https://api.nasa.gov/planetary/apod';
   static const coolMusic =
       'https://open.spotify.com/intl-pt/track/3OCxOUUH3FUf8xk0RuWADJ?si=3910a972b1bc4092';
 }
